@@ -1,0 +1,23 @@
+- input:
+    name: id
+    value: kw
+    text: 妖梦
+  button:
+    name: id
+    value: su
+
+- input:
+    name: id
+    value: kw
+    text: 妖梦1
+  button:
+    name: id
+    value: su
+
+- input:
+    name: id
+    value: kw
+    text: 妖梦2
+  button:
+    name: id
+    value: su
