@@ -1,19 +1,23 @@
-"""
+'''
 Author: ryuhangseong liuhangcheng2002@gmail.com
 Date: 2022-10-19 10:40:27
 LastEditors: ryuhangseong liuhangcheng2002@gmail.com
-LastEditTime: 2022-10-20 11:00:55
+LastEditTime: 2022-10-20 19:09:53
 FilePath: \learnUnit\test_search.py
-Description:
+Description: 
 
-Copyright (c) 2022 by ryuhangseong liuhangcheng2002@gmail.com, All Rights Reserved.
-"""
+Copyright (c) 2022 by ryuhangseong liuhangcheng2002@gmail.com, All Rights Reserved. 
+'''
 
-from lib2to3.pgen2 import driver
+
+
 from time import sleep
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 from ddt import ddt, file_data
 
 import unittest
@@ -24,7 +28,7 @@ class TestSearch(unittest.TestCase):
 
     def setUp(self) -> None:
         self.driver = webdriver.Chrome()
-        self.driver.implicitly_wait(10)
+        self.driver.implicitly_wait(5)
 
     def tearDown(self) -> None:
         self.driver.quit()
@@ -45,24 +49,53 @@ class TestSearch(unittest.TestCase):
             if handle != handle_window_index:
                 self.driver.switch_to.window(handle)
                 print("Now Register Window!")
-                sleep(2)
 
-    # def test_page_2_testclass(self):
-    #     url_second = "https://www.testclass.cn/"
-    #     self.driver.get(url_second)
-    #     sleep(.5)
-    #     self.driver.maximize_window()
-    #     sleep(.5)
-    #     self.driver.refresh()
-    #     sleep(.5)
-    #     self.driver.back()
-    #     sleep(.5)
-    #     self.driver.fullscreen_window()
-    #     sleep(.5)
-    #     self.driver.forward()
-    #     sleep(.5)
-    #     self.driver.set_window_rect(0, 0, 1024, 768)
-    #     sleep(1)
+    def test_page_2_testclass(self):
+        url_second = "https://www.testclass.cn/"
+        self.driver.get(url_second)
+        sleep(.5)
+        self.driver.maximize_window()
+        sleep(.5)
+        self.driver.refresh()
+        sleep(.5)
+        self.driver.back()
+        sleep(.5)
+        self.driver.fullscreen_window()
+        sleep(.5)
+        self.driver.forward()
+        sleep(.5)
+        self.driver.set_window_rect(0, 0, 1024, 768)
+        sleep(1)
+
+    @file_data("./data/test_page_3_baidu.yaml")
+    def test_page_3_baidu(self, **kwargs):
+        url_third = "https://www.baidu.com/"
+        self.driver.get(url_third)
+        self.assertEqual(self.driver.current_url, url_third)
+        self.driver.maximize_window()
+        print("\nMAXIMIZE OK!")
+        baidu = kwargs['baidu']
+        signin = self.driver.find_element(baidu['signin_method'], baidu['signin_path'])
+        signin.click()
+        print("SIGN IN OK!")
+        signup = self.driver.find_element(baidu['signup_method'], baidu['signup_path'])
+        window_index_handle = self.driver.current_window_handle
+        signup.click()
+        print("IFRAME OK!")
+        window_all_handle = self.driver.window_handles
+        self.assertEqual(window_all_handle[0], self.driver.current_window_handle)
+        # print(window_all_handle)
+        # print(self.driver.current_window_handle)
+        self.driver.switch_to.window(window_all_handle[-1])
+        loc_signup_button = (By.ID, "TANGRAM__PSP_4__submit")
+        WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located(loc_signup_button))
+        window_signup_handle = self.driver.current_window_handle
+        self.driver.switch_to.window(window_index_handle)
+        loc_index_iframe_close_button = (By.ID, "TANGRAM__PSP_4__closeBtn")
+        WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable(loc_index_iframe_close_button))
+        sleep(1)
+        self.driver.find_element('id', 'TANGRAM__PSP_4__closeBtn').click()
+        sleep(2)
 
 
 if __name__ == '__main__':

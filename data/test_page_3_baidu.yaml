@@ -1,0 +1,14 @@
+- baidu:
+    signin_method: id
+    signin_path: s-top-loginbtn
+    iframe_method: id
+    iframe_path: TANGRAM__PSP_4__foreground
+    signup_method: id
+    signup_path: TANGRAM__PSP_11__regLink
+    sign_method: name
+    username: userName
+    phone: phone
+    password: password
+    verifycode: verifyCode
+    sign_up_button_method: id
+    sign_up_button: TANGRAM__PSP_4__submit
