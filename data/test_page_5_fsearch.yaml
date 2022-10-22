@@ -1,0 +1,4 @@
+- fsearch:
+    url_fsearch: https://fsoufsou.com/
+    method_fsearch_input: By.ID
+    id_fsearch_input: search-input
