@@ -1,10 +1,9 @@
-from lib2to3.pgen2 import driver
 from selenium import webdriver
-
+from csv import reader
 
 import unittest
 
-class BasePage(object):
+class BasePage:
     
     def __init__(self, driver):
         self.driver = driver
@@ -26,3 +25,12 @@ class BasePage(object):
         
     def send_click(self, loc):
         self.driver.locator(loc).click()
+        
+    def get_data(self):
+        value_rows = []
+        with open('./search_data.csv') as c:
+            c_csv = reader(c)
+            next(c_csv)
+            for r in c_csv:
+                value_rows.append(r)
+        return value_rows
