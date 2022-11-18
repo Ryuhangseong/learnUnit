@@ -11,6 +11,8 @@ from time import sleep
 # 引入chromedriver
 chromedriver = "D:/Code/chromedriver.exe"
 os.environ["webdriver.chrome.driver"] = chromedriver
+msedgedriver = "D:/Code/msedgedriver.exe"
+os.environ["webdriver.edge.driver"] = msedgedriver
 
 
 class ElementOperator:
@@ -24,7 +26,7 @@ class ElementOperator:
 
     def open(self, url, driver='chrome'):
         """
-        :param driver: 浏览器对象
+        :param driver: 浏览器对象，默认为chrome
         :param url: 网址
         :return:
         """
@@ -35,8 +37,30 @@ class ElementOperator:
                 socket.setdefaulttimeout(50)
                 if driver == 'chrome':
                     # chrome_option.add_argument('--headless')
-                    self.driver = webdriver.Chrome()
+                    self.driver = webdriver.Chrome(chromedriver)
+                if driver == 'edge':
+                    # edge_option.add_argument('--headless')
+                    self.driver = webdriver.Edge(msedgedriver)
+                self.driver.implicitly_wait(10)
                 self.driver.get(url)
-                sleep(2)
+                try:
+                    self.driver.maximize_window()
+                except Exception as e:
+                    print(f"浏览器最大化失败：{e}")
+                flag = True
             except Exception as e:
-                print(e)
+                raise Exception(e)
+            if not flag:
+                raise EC.WebDriverException(f"打开浏览器进入{url}失败")
+
+    def close(self):
+        if self.driver:
+            try:
+                self.driver.close()
+            except Exception as e:
+                print(f"close浏览器失败：{e}")
+            try:
+                self.driver.quit()
+            except Exception as e:
+                print(f"quit浏览器失败：{e}")
+
