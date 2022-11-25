@@ -1,0 +1,5 @@
+页名,描述,定位描述,定位类型,定位值,定位超时,定位名称
+index,首页,搜索栏,"id","kw",3,"index_input"
+index,首页,查询按钮,"id","su",3,"index_search"
+news,新闻,搜索栏,"id","ww",3,"news_input"
+news,新闻,查询按钮,"id","s_btn_wr",3,"news_search"

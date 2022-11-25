@@ -1,7 +1,7 @@
 import os
 
 from sele_po.elementoperator import ElementOperator
-
+from selenium.webdriver.common.by import By
 path = os.path.dirname(os.path.abspath(__file__))
 
 

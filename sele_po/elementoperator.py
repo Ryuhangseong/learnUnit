@@ -8,10 +8,10 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.wait import WebDriverWait
 from time import sleep
 
-# 引入chromedriver
-chromedriver = "D:/Code/chromedriver.exe"
+# 引入driver
+chromedriver = str(os.getcwd().replace("\\test", "") + "\\driver\\chromedriver.exe")
 os.environ["webdriver.chrome.driver"] = chromedriver
-msedgedriver = "D:/Code/msedgedriver.exe"
+msedgedriver = str(os.getcwd().replace("\\test", "") + "\\driver\\msedgedriver.exe")
 os.environ["webdriver.edge.driver"] = msedgedriver
 
 
@@ -28,7 +28,7 @@ class ElementOperator:
         """
         :param driver: 浏览器对象，默认为chrome
         :param url: 网址
-        :return:
+        :return: 打开浏览器
         """
         flag = False
         driver = driver.lower()
@@ -52,8 +52,12 @@ class ElementOperator:
                 raise Exception(e)
             if not flag:
                 raise EC.WebDriverException(f"打开浏览器进入{url}失败")
+        return self.driver
 
     def close(self):
+        """
+        :return: 关闭浏览器
+        """
         if self.driver:
             try:
                 self.driver.close()
