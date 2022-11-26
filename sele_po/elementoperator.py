@@ -68,3 +68,11 @@ class ElementOperator:
             except Exception as e:
                 print(f"quit浏览器失败：{e}")
 
+    def click(self, locator, many=False, num=0):
+        if many:
+            ele = self.find_elements(locator)[num]
+        else:
+            ele = self.find_element(locator)
+        print(f"点击「{locator.desc}」")
+        ele.click()
+        time.sleep(0.2)
