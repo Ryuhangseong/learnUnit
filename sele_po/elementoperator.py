@@ -1,5 +1,7 @@
 import os
 import socket
+import time
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -75,4 +77,4 @@ class ElementOperator:
             ele = self.find_element(locator)
         print(f"点击「{locator.desc}」")
         ele.click()
-        time.sleep(0.2)
+        sleep(0.2)

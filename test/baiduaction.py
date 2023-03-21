@@ -13,5 +13,5 @@ class BaiduAction(ElementOperator):
 
 if __name__ == '__main__':
     baidu = BaiduAction()
-    baidu.open(baidu.url, 'chrome')
+    baidu.open(baidu.url, 'edge')
     baidu.close()
